@@ -27,7 +27,7 @@ const orderSchema = new mongoose.Schema({
         required:true
     }
    },
-   orderItems:{
+   orderItems:[{
     name:{
         type:String,
         required:true
@@ -49,7 +49,7 @@ const orderSchema = new mongoose.Schema({
         ref:'Product',
         required:true
     },
-   },
+ }],
    user:{
     type:mongoose.Schema.ObjectId,
     ref:'User',

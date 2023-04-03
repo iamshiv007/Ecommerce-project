@@ -6,7 +6,7 @@ const cloudinary = require("cloudinary").v2
 const cookieParser = require('cookie-parser')
 
 app.use(express.json())
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended:true }))
 app.use(cookieParser())
 
 // Handling Uncaught Exception
