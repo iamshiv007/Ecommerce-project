@@ -29,7 +29,8 @@ import {
     DELETE_REVIEW_REQUEST,
     DELETE_REVIEW_SUCCESS,
     DELETE_REVIEW_FAIL,
-    DELETE_REVIEW_RESET
+    DELETE_REVIEW_RESET,
+    PRODUCT_DETAILS_FAIL
 } from '../constants/productConstants'
 
 export const productsReducer = (state = { product: [] }, action) => {

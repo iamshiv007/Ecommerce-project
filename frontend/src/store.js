@@ -35,7 +35,7 @@ const reducer = combineReducers({
     forgotPassword:forgotPasswordReducer,
     userDetails:userDetailsReducer,
     cart:cartReducer,
-    newOrder:myOrdersReducer,
+    myOrder:myOrdersReducer,
     allOrders:allOrdersReducer,
     orderDetails:orderDetailReducer,
     myOrders:myOrdersReducer,

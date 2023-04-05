@@ -32,7 +32,11 @@ import {
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     USER_DETAIL_SUCCESS,
-    USER_DETAIL_FAIL
+    USER_DETAIL_FAIL,
+    LOGIN_FAIL,
+    LOAD_USER_FAIL,
+    LOGOUT_FAIL,
+    ALL_USERS_FAIL
 } from '../constants/userConstants'
 
 export const userReducer = (state = { user: {} }, action) => {

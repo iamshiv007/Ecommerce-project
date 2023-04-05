@@ -31,16 +31,19 @@ import {
     DELETE_USER_REQUEST,
     DELETE_USER_SUCCESS,
     DELETE_USER_FAIL,
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    LOAD_USER_FAIL
 } from '../constants/userConstants'
 import axios from 'axios'
+
+const port = "http://localhost:5000"
 
 // Login
 export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({ type: LOGIN_REQUEST })
 
-        const { data } = await axios.post(`/api/v1/login`, { email, password })
+        const { data } = await axios.post(`${port}/api/v1/login`, { email, password })
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -59,7 +62,9 @@ export const register = (userData) => async (dispatch) => {
     try {
         dispatch({ type: REGISTER_USER_REQUEST })
 
-        const { data } = await axios.post(`/api/v1/register`, userData)
+        const config = { headers: { "Content-Type": "multipart/form-data" } }
+
+        const { data } = await axios.post(`${port}/api/v1/register`, userData, config)
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -245,6 +250,6 @@ export const deleteUser = (id) => async (dispatch) => {
 }
 
 // Clearing Errors
-export const clearError = () => async (dispatch) => {
+export const clearErrors = () => async (dispatch) => {
     dispatch({ type: CLEAR_ERRORS })
 }
