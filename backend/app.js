@@ -4,10 +4,14 @@ const app = express()
 const bodyParser = require("body-parser")
 const cloudinary = require("cloudinary").v2
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
+const fileUpload = require("express-fileupload")
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended:true }))
 app.use(cookieParser())
+app.use(cors())
+app.use(fileUpload())
 
 // Handling Uncaught Exception
 process.on("uncaughtException", (err) => {
