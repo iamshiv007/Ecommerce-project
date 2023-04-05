@@ -43,12 +43,12 @@ app.use(errroMiddleware)
 
 const port = process.env.PORT || 7000
 
-// Statis files
-app.use(express.static(path.join(__dirname, '../frontend/build')))
+// // Statis files
+// app.use(express.static(path.join(__dirname, '../frontend/build')))
 
-app.get('*', function(req, res){
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
-})
+// app.get('*', function(req, res){
+//     res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
+// })
 
 const server = app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`)
