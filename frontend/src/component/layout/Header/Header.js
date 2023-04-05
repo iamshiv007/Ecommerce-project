@@ -29,7 +29,6 @@ const options = {
     profileIconColor:"rgba(35, 35, 35. 0.8)",
     searchIconColor:"rgba(35, 35, 35, 0.8)",
     cartIconColor:"rgba(35, 35, 35, 0.8)",
-
 }
 
 export const Header = () => {
