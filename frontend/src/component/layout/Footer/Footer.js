@@ -23,7 +23,7 @@ export const Footer = () => {
 
         <div className="rightFooter">
             <h4>Follow Us</h4>
-            <a href="">Instagram</a>
+            <a href="www.instagram.com/iam_shiv_726">Instagram</a>
             <a href="">LinkedIn</a>
             <a href="">GitHub</a>
         </div>
