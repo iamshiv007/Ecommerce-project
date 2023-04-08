@@ -7,13 +7,6 @@ import './Profile.css'
 
 export const Profile = () => {
     const { loading, isAuthenticated, user } = useSelector(state => state.user)
-    const history = useHistory()
-
-    useEffect(() => {
-        if(!isAuthenticated){
-            history.push('/')
-        }
-    }, [history, isAuthenticated]);
 
   return (
     <Fragment>

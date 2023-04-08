@@ -32,18 +32,23 @@ import {
     DELETE_USER_SUCCESS,
     DELETE_USER_FAIL,
     CLEAR_ERRORS,
-    LOAD_USER_FAIL
+    LOAD_USER_FAIL,
+    LOGOUT_FAIL,
+    LOGOUT_REQUEST,
+    LOGOUT_SUCCESS
 } from '../constants/userConstants'
 import axios from 'axios'
 
-const port = "http://localhost:5000"
+const PORT = "http://localhost:5000"
 
 // Login
 export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({ type: LOGIN_REQUEST })
 
-        const { data } = await axios.post(`${port}/api/v1/login`, { email, password })
+        const { data } = await axios.post(`${PORT}/api/v1/login`, { email, password })
+
+        localStorage.setItem('token', data.token)
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -64,7 +69,7 @@ export const register = (userData) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "multipart/form-data" } }
 
-        const { data } = await axios.post(`${port}/api/v1/register`, userData, config)
+        const { data } = await axios.post(`${PORT}/api/v1/register`, userData, config)
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -83,8 +88,9 @@ export const loadUser = () => async (dispatch) => {
     try {
         dispatch({ type: LOAD_USER_REQUEST })
 
-        const { data } = await axios.get(`/api/v1/me`)
+        const token = localStorage.getItem('token')
 
+        const { data } = await axios.post(`${PORT}/api/v1/me`, { token })
         dispatch({
             type: LOAD_USER_SUCCESS,
             payload: data.user
@@ -97,12 +103,27 @@ export const loadUser = () => async (dispatch) => {
     }
 }
 
+// Logout user
+export const logout = () => async (dispatch) => {
+    try {
+        dispatch({ type: LOGOUT_REQUEST })
+
+        const { data } = await axios.get(`${PORT}/api/v1/logout`)
+
+        dispatch({ type: LOGOUT_SUCCESS, payload: data.success })
+    } catch (error) {
+        dispatch({ type: LOGOUT_FAIL, payload: error.data.response.message })
+    }
+}
+
 // Update Profile
 export const upadateProfile = (userData) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_PROFILE_REQUEST })
 
-        const { data } = await axios.put(`/api/v1/me/update`, userData)
+        const config = { headers: { "Content-Type": "multipart/form-data" } }
+
+        const { data } = await axios.put(`${PORT}/api/v1/me/update`, userData, config)
 
         dispatch({
             type: UPDATE_PROFILE_SUCCESS,
@@ -121,7 +142,9 @@ export const upadatePassword = (passwords) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_PASSWORD_REQUEST })
 
-        const { data } = await axios.put(`/api/v1/password/update`, passwords)
+        const config = { headers: { "Content-Type": "multipart/form-data" } }
+
+        const { data } = await axios.put(`${PORT}/api/v1/password/update`, passwords, config)
 
         dispatch({
             type: UPDATE_PASSWORD_SUCCESS,
@@ -140,7 +163,9 @@ export const forgotPassword = (email) => async (dispatch) => {
     try {
         dispatch({ type: FORGOT_PASSWORD_REQUEST })
 
-        const { data } = await axios.post(`/api/v1/password/forgot`, email)
+        const config = { headers: { "Content-Type": "multipart/form-data" } }
+
+        const { data } = await axios.post(`${PORT}/api/v1/password/forgot`, email, config)
 
         dispatch({
             type: FORGOT_PASSWORD_SUCCESS,
@@ -159,7 +184,9 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
     try {
         dispatch({ type: RESET_PASSWORD_REQUEST })
 
-        const { data } = await axios.put(`/api/v1/password/reset/${token}`, passwords)
+        const config = { headers: { "Content-Type": "multipart/form-data" } }
+
+        const { data } = await axios.put(`${PORT}/api/v1/password/reset/${token}`, passwords, config)
 
         dispatch({
             type: RESET_PASSWORD_SUCCESS,
@@ -178,7 +205,9 @@ export const getAllUsers = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_USERS_REQUEST })
 
-        const { data } = await axios.get(`/api/v1/admin/users`)
+        const token = localStorage.getItem('token')
+
+        const { data } = await axios.get(`${PORT}/api/v1/admin/users`, token)
 
         dispatch({
             type: ALL_USERS_SUCCESS,
@@ -197,7 +226,7 @@ export const getUserDetail = (id) => async (dispatch) => {
     try {
         dispatch({ type: USER_DETAIL_REQUEST })
 
-        const { data } = await axios.get(`/api/v1/admin/user/${id}`)
+        const { data } = await axios.get(`${PORT}/api/v1/admin/user/${id}`)
 
         dispatch({
             type: USER_DETAIL_SUCCESS,
@@ -216,7 +245,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_USER_REQUEST })
 
-        const { data } = await axios.put(`/api/v1/admin/user/${id}`, userData)
+        const { data } = await axios.put(`${PORT}/api/v1/admin/user/${id}`, userData)
 
         dispatch({
             type: UPDATE_USER_SUCCESS,
@@ -235,7 +264,7 @@ export const deleteUser = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_USER_REQUEST })
 
-        const { data } = await axios.delete(`/api/v1/admin/user/${id}`)
+        const { data } = await axios.delete(`${PORT}/api/v1/admin/user/${id}`)
 
         dispatch({
             type: DELETE_USER_SUCCESS,

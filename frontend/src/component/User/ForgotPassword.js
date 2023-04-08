@@ -1,4 +1,4 @@
-import { LocalDining, MailOutline } from '@mui/icons-material'
+import { MailOutline } from '@mui/icons-material'
 import React, { Fragment, useState, useEffect } from 'react'
 import { Loader } from '../layout/Loader/Loader'
 import { MetaData } from '../layout/MetaData'
@@ -6,14 +6,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
 import { clearErrors, forgotPassword } from '../../actions/userAction'
 import './ForgotPassword.css'
+import { useHistory } from 'react-router-dom'
 
 export const ForgotPassword = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
+    const history = useHistory()
+
     const { error, message, loading } = useSelector(
         (state) => state.forgotPassword
     )
+
+    const { isAuthenticated } = useSelector(state => state.user)
 
     const [email, setEmail] = useState("")
 
@@ -34,6 +39,10 @@ export const ForgotPassword = () => {
 
         if(message){
             alert.success(message)
+        }
+
+        if(isAuthenticated){
+            history.push('/')
         }
     }, [dispatch, alert, message, error])
 

@@ -49,7 +49,6 @@ export const LogInSignUp = ({ location}) => {
   }
 
   // const redirect = location.search ? location.search.split("=")[1] : '/account'
-  const redirect = '/profile'
 
   useEffect(() => {
     if(error){
@@ -57,9 +56,9 @@ export const LogInSignUp = ({ location}) => {
       dispatch(clearErrors)
     }
     if(isAuthenticated){
-      history.push(redirect)
+      history.push('/account')
     }
-  }, [dispatch, error, alert, isAuthenticated, history, redirect])
+  }, [dispatch, error, alert, isAuthenticated, history])
 
   const loginSubmit = (e) => {
     e.preventDefault()

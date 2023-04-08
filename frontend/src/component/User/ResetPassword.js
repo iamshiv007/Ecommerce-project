@@ -7,10 +7,15 @@ import { resetPassword, clearErrors } from '../../actions/userAction'
 import { Lock, LockOpen } from '@mui/icons-material'
 import { MetaData } from '../layout/MetaData'
 import './ResetPassword.css'
+import { useHistory, useParams } from 'react-router-dom'
 
-export const ResetPassword = ({ history, match}) => {
+export const ResetPassword = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
+
+    const history = useHistory()
+
+    const { token } = useParams()
 
     const { error, success, loading } = useSelector(
         (state) => state.forgotPassword
@@ -27,7 +32,7 @@ export const ResetPassword = ({ history, match}) => {
         myForm.set('password', password)
         myForm.set('confirmPassword', confirmPassword)
 
-        dispatch(resetPassword(match.params.token, myForm))
+        dispatch(resetPassword(token, myForm))
     }
 
     useEffect(() => {
@@ -39,7 +44,7 @@ export const ResetPassword = ({ history, match}) => {
         if(success){
             alert.success('Password Updated Successfully')
 
-            history.puch('/login')
+            history.push('/login')
         }
     }, [error, alert, dispatch, history, success])
   return (

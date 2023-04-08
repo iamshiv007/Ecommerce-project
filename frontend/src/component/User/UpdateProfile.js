@@ -14,15 +14,7 @@ export const UpdateProfile = () => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const user = {
-        name:"Ashiq",
-        email:"Ashiq@demo.com",
-        avatar:{
-            url:"url"
-        }
-    }
-
-    // const { user } = useSelector(state => state.user)
+    const { user } = useSelector(state => state.user)
     
     const { loading, error, isUpdated } = useSelector(state => state.profile)
 
@@ -34,12 +26,14 @@ export const UpdateProfile = () => {
     const updateProfileSubmit = (e) => {
         e.preventDefault()
 
+        const token = localStorage.getItem('token')
+
         const myForm = new FormData()
 
         myForm.set('name', name)
         myForm.set("email", email)
         myForm.set('avatar', avatar)
-        myForm.set("avatarPreview", avatarPreview)
+        myForm.set('token', token)
         dispatch(upadateProfile(myForm))
     }
 
@@ -65,7 +59,7 @@ export const UpdateProfile = () => {
 
         if(error){
             alert.error(error)
-            dispatch(clearErrors)
+            dispatch(clearErrors())
         }
 
         if(isUpdated){
@@ -102,7 +96,7 @@ export const UpdateProfile = () => {
                         placeholder='Name'
                         required
                         name='name'
-                        onChange={(e) => setName(e.target.name)}
+                        onChange={(e) => setName(e.target.value)}
                          />
                     </div>
                     <div className="updateProfileEmail">
@@ -113,7 +107,7 @@ export const UpdateProfile = () => {
                         placeholder="Email"
                         name='email'
                         required
-                        onChange={(e) => setEmail(e.target.email)}
+                        onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
