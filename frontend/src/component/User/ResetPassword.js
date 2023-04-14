@@ -36,61 +36,61 @@ export const ResetPassword = () => {
     }
 
     useEffect(() => {
-        if(error){
+        if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-        if(success){
+        if (success) {
             alert.success('Password Updated Successfully')
 
             history.push('/login')
         }
     }, [error, alert, dispatch, history, success])
-  return (
-    <Fragment>
-        {
-            loading
-            ?<Loader/>
-            :<Fragment>
-                <MetaData title='Change Password' />
-                <div className="resetPasswordContainer">
-                    <div className="resetPasswordBox">
-                        <h2 className="resetPasswordHeading">Update Profile</h2>
-                        <form 
-                        onSubmit={resetPasswordSubmit}
-                        className="resetPasswordForm"
-                        >
-                            <div className="">
-                                <LockOpen/>
-                                <input 
-                                type="password" 
-                                placeholder='New Password'
-                                value={password}
-                                required
-                                onChange={(e) => setPassword(e.target.value)}
-                                 />
+    return (
+        <Fragment>
+            {
+                loading
+                    ? <Loader />
+                    : <Fragment>
+                        <MetaData title='Change Password' />
+                        <div className="resetPasswordContainer">
+                            <div className="resetPasswordBox">
+                                <h2 className="resetPasswordHeading">Update Profile</h2>
+                                <form
+                                    onSubmit={resetPasswordSubmit}
+                                    className="resetPasswordForm"
+                                >
+                                    <div className="">
+                                        <LockOpen />
+                                        <input
+                                            type="password"
+                                            placeholder='New Password'
+                                            value={password}
+                                            required
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="loginPassword">
+                                        <Lock />
+                                        <input
+                                            type="password"
+                                            placeholder='Confirm Password'
+                                            value={confirmPassword}
+                                            required
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                        />
+                                    </div>
+                                    <input
+                                        type="submit"
+                                        value="Update"
+                                        className='resetPasswordBtn'
+                                    />
+                                </form>
                             </div>
-                            <div className="loginPassword">
-                                <Lock/>
-                                <input 
-                                type="password" 
-                                placeholder='Confirm Password'
-                                value={confirmPassword}
-                                required
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                 />
-                            </div>
-                            <input 
-                            type="submit" 
-                            value="Update"
-                            className='resetPasswordBtn'
-                             />
-                        </form>
-                    </div>
-                </div>
-            </Fragment>
-        }
-    </Fragment>
-  )
+                        </div>
+                    </Fragment>
+            }
+        </Fragment>
+    )
 }

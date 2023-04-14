@@ -1,7 +1,8 @@
-import { Instagram, YouTube } from '@mui/icons-material'
+import { GitHub, Instagram } from '@mui/icons-material'
 import { Avatar, Button, Typography } from '@mui/material'
 import React from 'react'
 import './AboutSection.css'
+import Shiv from '../../../images/shiv1.jpg'
 
 export const About = () => {
     const visitInstagram = () => {
@@ -17,7 +18,7 @@ export const About = () => {
         <div>
             <div>
                 <Avatar
-                src='demo_url'
+                src={Shiv}
                 style={{ width:'10vmax', height:'10vmax', margin:'2vmax 0'}}
                 alt='Founder'
                 />
@@ -32,16 +33,16 @@ export const About = () => {
             <div className="aboutSectionContainer2">
                 <Typography component="h2">Our Brands</Typography>
                 <a 
-                href="https//youtube.com/shiv"
+                href="https://www.github.com/iamshiv007"
                 target='_blank'
                 >
-                    <YouTube className='youTubeSvgIcon' />
+                    <GitHub style={{fontSize:'40px'}} className='gitHubSvgIcon' />
                 </a>
                 <a 
-                href="https//instagram.com/iam_shiv_726"
+                href="https://www.instagram.com/iam_shiv_726"
                 target='_blank'
                 >
-                    <Instagram className='instagramSvgIcon' />
+                    <Instagram style={{fontSize:'40px'}} className='instagramSvgIcon' />
                 </a>
             </div>
         </div>

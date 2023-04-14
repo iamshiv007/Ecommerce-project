@@ -24,14 +24,11 @@ export const UpdatePassword = ({ history }) => {
     const updatePasswordSubmit = (e) => {
         e.preventDefault()
 
-        const token = localStorage.getItem('token')
-
         const myForm = new FormData()
 
         myForm.set('oldPassword', oldPassword)
         myForm.set('newPassword', newPassword)
         myForm.set('confirmPassword', confirmPassword)
-        myForm.set('token', token)
 
         dispatch(upadatePassword(myForm))
     }

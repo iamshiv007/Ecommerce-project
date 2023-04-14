@@ -16,21 +16,23 @@ export const Sidebar = () => {
             <Dashboard/> Dashboard
         </p>
       </Link>
-      <Link to='/new/product'>
+      <div className='treeLinks'>
       <TreeView
       defaultCollapseIcon={<ExpandMore/>}
       defaultExpandIcon={<ImportExport/>}
       >
         <TreeItem nodeId='1' label='Products'>
             <Link to='/admin/products'>
+              <div>
                 <TreeItem nodeId='2' label="All" icon={<PostAdd/>} />
+                </div>
             </Link>
             <Link to='/admin/product'>
                 <TreeItem nodeId='3' label="Create" icon={<Add/>} />
             </Link>
         </TreeItem>
       </TreeView>
-      </Link>
+      </div>
       <Link to='/admin/orders'>
         <p>
             <ListAlt/>

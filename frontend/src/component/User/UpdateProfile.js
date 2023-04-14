@@ -21,19 +21,16 @@ export const UpdateProfile = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [avatar, setAvatar] = useState("")
-    const [avatarPreview, setAvatarPreview] = useState("/profile/png")
+    const [avatarPreview, setAvatarPreview] = useState("")
 
     const updateProfileSubmit = (e) => {
         e.preventDefault()
-
-        const token = localStorage.getItem('token')
 
         const myForm = new FormData()
 
         myForm.set('name', name)
         myForm.set("email", email)
         myForm.set('avatar', avatar)
-        myForm.set('token', token)
         dispatch(upadateProfile(myForm))
     }
 

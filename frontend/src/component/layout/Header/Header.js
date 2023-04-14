@@ -1,42 +1,102 @@
-import React from "react";
-import { ReactNavbar } from "overlay-navbar";
+import React, { useEffect } from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
 import logo from "../../../images/logo.png";
 
-const options = {
-  burgerColorHover: "#eb4034",
-  burgerColor:'green',
-  logo,
-  logoWidth: "20vmax",
-  navColor1: "white",
-  logoHoverSize: "10px",
-  logoHoverColor: "#eb4034",
-  link1Text: "Home",
-  link2Text: "Products",
-  link3Text: "Contact",
-  link4Text: "About",
-  link1Url: "/",
-  link2Url: "/products",
-  link3Url: "/contact",
-  link4Url: "/about",
-  link1Size: "1.3vmax",
-  link1Color: "rgba(35, 35, 35,0.8)",
-  nav1justifyContent: "flex-end",
-  nav2justifyContent: "flex-end",
-  nav3justifyContent: "flex-start",
-  nav4justifyContent: "flex-start",
-  link1ColorHover: "#eb4034",
-  link1Margin: "1vmax",
-  profileIconUrl: "/login",
-  profileIconColor: "rgba(35, 35, 35,0.8)",
-  searchIconColor: "rgba(35, 35, 35,0.8)",
-  cartIconColor: "rgba(35, 35, 35,0.8)",
-  profileIconColorHover: "#eb4034",
-  searchIconColorHover: "#eb4034",
-  cartIconColorHover: "#eb4034",
-  cartIconMargin: "1vmax",
-};
+import {
+  AccountBox,
+  AddBusiness,
+  Close,
+  DensityMedium,
+  Email,
+  HelpCenter,
+  Home,
+  ListAlt,
+  Login,
+  Logout,
+  ShoppingCart,
+} from "@mui/icons-material";
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../actions/userAction";
+import { useAlert } from "react-alert";
 
 export const Header = () => {
-  return <ReactNavbar {...options} />;
-};
+  const options = [
+    { text: "Home", icon: <Home />, link: "/" },
+    { text: "Products", icon: <AddBusiness />, link: "/products" },
+    { text: "Cart", icon: <ShoppingCart />, link: "/cart" },
+    { text: "Orders", icon: <ListAlt />, link: "/orders" },
+    { text: 'Profile', icon: <AccountBox />, link: '/account' },
+    { text: "About", icon: <HelpCenter />, link: "/about" },
+    { text: "Contact", icon: <Email />, link: "/contact" },
+    { text: 'Logout', icon: <Logout />, link: '/login', func:logoutUser }
+  ];
 
+  const [open, setOpen] = useState(open);
+  const dispatch = useDispatch()
+  const alert = useAlert()
+
+  function logoutUser() {
+    dispatch(logout());
+    alert.success("Logout Successfully");
+  }
+
+  const toggleDrawer = () => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpen(!open);
+  };
+
+  const list = () => (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer()}
+      onKeyDown={toggleDrawer()}
+    >
+      <div className="headerTop">
+        <img style={{ width: "185px" }} src={logo} alt="Ecommerce" />
+        <Button onClick={toggleDrawer()}>
+          <Close style={{ fontSize: "30px" }} />
+        </Button>
+      </div>
+      <div className="headerLinkBox">
+        {options.map((option, index) => (
+          <div onClick={option.func} key={index}>
+            <Link to={option.link}>
+              <div>
+                {option.icon}
+                <span>{option.text}</span>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
+    </Box>
+  );
+
+  return (
+    <div>
+      <Fragment>
+        <Button
+          style={{ position: "fixed", top: "2%", left: "1%", zIndex: "10" }}
+          onClick={toggleDrawer()}
+        >
+          <DensityMedium style={{ fontSize: "40px", fontWeight: "800" }} />
+        </Button>
+        <Drawer anchor="left" open={open} onClose={toggleDrawer()}>
+          {list()}
+        </Drawer>
+      </Fragment>
+    </div>
+  );
+};

@@ -4,9 +4,18 @@ import { useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { MetaData } from '../layout/MetaData'
 import './Profile.css'
+import profile from '../../images/Profile.png'
 
 export const Profile = () => {
     const { loading, isAuthenticated, user } = useSelector(state => state.user)
+
+    function isValidImageUrl(url) {
+        // Regular expression to match image file extensions
+        const imageExtensionPattern = /\.(jpg|jpeg|png|gif|ico)$/i;
+        
+        // Test if the URL ends with an image file extension
+        return imageExtensionPattern.test(url);
+      }
 
   return (
     <Fragment>
@@ -17,7 +26,7 @@ export const Profile = () => {
             <div className="profileContainer">
                 <div>
                     <h1>My Profile</h1>
-                    <img src={user.avatar.url} alt={user.name} />
+                    <img src={isValidImageUrl(user.avatar.url) ? user.avatar.url : profile} alt={user.name} />
                     <Link to='/me/update'>Edit Profile</Link>
                 </div>
                 <div>

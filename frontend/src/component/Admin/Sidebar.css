@@ -3,7 +3,8 @@
     background-color: rgb(255, 255, 255);
     flex-direction: column;
     padding:4rem 0;
-    /* align-items: center; */
+    align-items: center;
+
 }
 
 .sidebar > a{
@@ -19,15 +20,15 @@
     filter:drop-shadow(0 0 10px tomato)
 }
 
-.sidebar a{
+.sidebar a, .treeLinks{
     text-decoration: none;
     color:rgba(0, 0, 0, 0.493);
-    padding:2rem;
+    padding:1.7rem;
     font:200 1rem "Roboto";
     transition: all 0.5s;
 }
 
-.sidebar a:hover{
+.sidebar a:hover, .treeLinks:hover{
     color:tomato;
     transform: scale(1.1);
 }

@@ -48,15 +48,15 @@ export const LogInSignUp = ({ location}) => {
     }
   }
 
-  // const redirect = location.search ? location.search.split("=")[1] : '/account'
+  const redirect = location.search ? location.search.split("=")[1] : '/'
 
   useEffect(() => {
-    if(error){
+    if(error && error !== "Please login to access this resource"){
       alert.error(error)
       dispatch(clearErrors)
     }
     if(isAuthenticated){
-      history.push('/account')
+      history.push(redirect)
     }
   }, [dispatch, error, alert, isAuthenticated, history])
 

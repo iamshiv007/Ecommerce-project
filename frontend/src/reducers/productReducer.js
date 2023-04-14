@@ -19,7 +19,6 @@ import {
     UPDATE_PRODUCT_RESET,
     DELETE_PRODUCT_RESET,
     PRODUCT_DETAILS_REQUEST,
-    PRODUCT_DETAILS_SUCCESS,
     NEW_REVIEW_REQUEST,
     NEW_REVIEW_SUCCESS,
     NEW_REVIEW_RESET,
@@ -30,16 +29,18 @@ import {
     DELETE_REVIEW_SUCCESS,
     DELETE_REVIEW_FAIL,
     DELETE_REVIEW_RESET,
-    PRODUCT_DETAILS_FAIL
+    PRODUCT_DETAILS_FAIL,
+    PRODUCT_DETAILS_SUCCESS,
+    NEW_PRODUCT_RESET
 } from '../constants/productConstants'
 
-export const productsReducer = (state = { product: [] }, action) => {
+export const productsReducer = (state = { products: [] }, action) => {
     switch (action.type) {
         case ALL_PRODUCT_REQUEST:
         case ADMIN_PRODUCT_REQUEST:
             return {
                 loading: true,
-                product: []
+                products: []
             }
         case ALL_PRODUCT_SUCCESS:
             return {
@@ -47,7 +48,7 @@ export const productsReducer = (state = { product: [] }, action) => {
                 products: action.payload.products,
                 resultPerPage: action.payload.resultPerPage,
                 productsCount: action.payload.productsCount,
-                filteredProductCounts: action.payload.filteredProductCounts
+                filteredProductsCount: action.payload.filteredProductsCount
             }
         case ADMIN_PRODUCT_SUCCESS:
             return {
@@ -71,7 +72,7 @@ export const productsReducer = (state = { product: [] }, action) => {
 }
 
 export const newProductReducer = (state = { products: {} }, action) => {
-    switch (action) {
+    switch (action.type) {
         case NEW_PRODUCT_REQUEST:
             return {
                 loading: true
@@ -81,6 +82,11 @@ export const newProductReducer = (state = { products: {} }, action) => {
                 loading: false,
                 success: action.payload.success,
                 product: action.payload.product
+            }
+        case NEW_PRODUCT_RESET:
+            return {
+                ...state,
+                success:false,
             }
         case NEW_PRODUCT_FAIL:
             return {
@@ -127,7 +133,6 @@ export const productReducer = (state = {}, action) => {
             }
         case UPDATE_PRODUCT_RESET:
             return {
-                ...state,
                 isUpdated: false
             }
         case DELETE_PRODUCT_RESET:
@@ -145,16 +150,22 @@ export const productReducer = (state = {}, action) => {
     }
 }
 
-export const productDetailsReducer = (state = { products: {} }, action) => {
-    switch (action) {
+export const productDetailsReducer = (state = { product: {} }, action) => {
+    switch (action.type) {
         case PRODUCT_DETAILS_REQUEST:
             return {
+                ...state,
                 loading: true
             }
         case PRODUCT_DETAILS_SUCCESS:
             return {
                 loading: false,
                 product: action.payload.product
+            }
+        case UPDATE_PRODUCT_SUCCESS:
+            return {
+                loading: false,
+                product: action.payload.updatedProduct
             }
         case PRODUCT_DETAILS_FAIL:
             return {
@@ -172,7 +183,7 @@ export const productDetailsReducer = (state = { products: {} }, action) => {
     }
 }
 export const newReviewReducer = (state = {}, action) => {
-    switch (action) {
+    switch (action.type) {
         case NEW_REVIEW_REQUEST:
             return {
                 loading: true
@@ -186,7 +197,7 @@ export const newReviewReducer = (state = {}, action) => {
             return {
                 ...state,
                 loading: false,
-                error: null
+                error: action.payload
             }
         case NEW_REVIEW_RESET:
             return {
@@ -207,13 +218,13 @@ export const productReviewsReducer = (state = { reviews: [] }, action) => {
     switch (action.type) {
         case ALL_REVIEW_REQUEST:
             return {
+                ...state,
                 loading: true,
-                product: []
             }
         case ALL_REVIEW_SUCCESS:
             return {
                 loading: false,
-                review: action.payload,
+                reviews: action.payload,
             }
         case ALL_REVIEW_FAIL:
             return {
