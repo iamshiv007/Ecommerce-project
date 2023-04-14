@@ -82,11 +82,9 @@ exports.forgotPassword = catchAsyncError( async (req, res, next) => {
 
     await user.save({validateBeforeSave: false})
 
-    const restePasswordUrl = `${req.protocol}://${req.get(
-        "host"
-    )}/password/reset/${resetToken}`
+    const resetPasswordUrl = `${req.protocol}://localhost:3000/password/reset/${resetToken}`
 
-    const message = `Your password reset token is :- \n\n${restePasswordUrl} \n\nIf you have not requested this email then, please ignore it.`
+    const message = `Your password reset token is :- \n\n${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it.`
 
     try {
         sendEmail({
@@ -172,6 +170,7 @@ exports.updatePassword = catchAsyncError( async ( req, res, next) => {
 
 // 8 Update User Profile
 exports.updateProfile = catchAsyncError( async( req, res, next) => {
+    console.log(req.body)
     const newUserData = {
         name: req.body.name,
         email: req.body.email
@@ -242,14 +241,15 @@ exports.updateUserRole = catchAsyncError (async (req, res, next) => {
         role : req.body.role
     }
 
-    await User.findByIdAndUpdate(req.params.id, newUserData, {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, newUserData, {
         new : true,
         runValidators : true,
         useFindAndModify : false
     })
 
     res.status(200).json({
-        success:true
+        success:true,
+        updatedUser
     })
 })
 
